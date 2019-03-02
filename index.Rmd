@@ -1,0 +1,44 @@
+---
+title: "Riddler Express March 1, 2019"
+author: "David W. Body"
+date: "March 2, 2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+# Problem
+
+Here is the [FiveThirtyEight.com Riddler Express problem from March 1, 2019](https://fivethirtyeight.com/features/youre-home-alone-you-can-buy-zillions-of-video-game-cigarettes-or-beat-yourself-at-bananagrams/):
+
+> From Gerald Dorrer, I reckon this here’s a math puzzle:
+
+> In the video game “Red Dead Redemption 2,” there is a side quest where the main character is supposed to collect 12 sets of cigarette cards, each consisting of 12 unique cards.
+
+> Some cards can be found lying around in the open world, but the easiest way to collect the cards is to buy cigarettes at the store and collect the single random card included in each pack. Suppose Arthur is too lazy to look for cards in the open world and tries to complete the set only by buying packs at the store.
+
+> At $5 a pack, how much money do we expect Arthur to spend to complete all 12 sets?
+
+# Solution
+
+There are 12 sets of 12 unique cards, or 144 cards total. Each pack of cigarettes contains a single random card.
+
+This is the [coupon collector's problem](https://en.wikipedia.org/wiki/Coupon_collector's_problem) with $n = 144$.
+
+From Wikipedia, we know that the expected number of packs $E(N)$ Arthur will need to purchase to collect all cards is
+
+$$ {\displaystyle {\begin{aligned}\operatorname {E} (N)&={\frac {n}{n}}+{\frac {n}{n-1}}+\cdots +{\frac {n}{1}}\\&=n\cdot \left({\frac {1}{1}}+{\frac {1}{2}}+\cdots +{\frac {1}{n}}\right)\\&={n}\cdot \sum_{i=1}^{n}{\frac {1}{i}}\\\end{aligned}}} $$
+
+We can compute this in R as follows:
+
+```{r}
+n <- 144
+n * sum(1/1:n)
+```
+
+Since each pack costs $5, we expect Arthur to spend about $`r format(round(5 * n * sum(1/1:n)), big.mark = ",")`, computed as follows:.
+
+```{r}
+5 * n * sum(1/1:n)
+```
